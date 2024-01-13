@@ -1,0 +1,163 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > DeliveryCalculation</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">ru.shefer</a>
+</div>
+
+<h1>Coverage Summary for Class: DeliveryCalculation (ru.shefer)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">DeliveryCalculation</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    75%
+  </span>
+  <span class="absValue">
+    (3/4)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    96.7%
+  </span>
+  <span class="absValue">
+    (29/30)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package ru.shefer;
+&nbsp;
+&nbsp;import lombok.Getter;
+&nbsp;import lombok.SneakyThrows;
+&nbsp;
+&nbsp;import java.io.FileInputStream;
+&nbsp;import java.util.Properties;
+&nbsp;
+&nbsp;@Getter
+&nbsp;public class DeliveryCalculation {
+<b class="nc">&nbsp;    private final double minDeliveryCost;</b>
+&nbsp;
+<b class="fc">&nbsp;    public DeliveryCalculation(double minDeliveryCost) {</b>
+<b class="fc">&nbsp;        this.minDeliveryCost = minDeliveryCost;</b>
+&nbsp;    }
+&nbsp;
+<b class="fc">&nbsp;    @SneakyThrows</b>
+<b class="fc">&nbsp;    public DeliveryCalculation() {</b>
+<b class="fc">&nbsp;        Properties property = new Properties();</b>
+<b class="fc">&nbsp;        property.load(new FileInputStream(&quot;/home/aleksandr/IdeaProjects/delivery_home_work/src/main/resources/delivery.properties&quot;));</b>
+<b class="fc">&nbsp;        minDeliveryCost = Double.parseDouble(property.getProperty(&quot;minDeliveryCost&quot;));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public double calculateDeliveryCost(Delivery delivery, DeliveryService deliveryService) {
+<b class="fc">&nbsp;        double firstTerm = 0;</b>
+<b class="fc">&nbsp;        double secondTerm = 0;</b>
+<b class="fc">&nbsp;        double thirdTerm = 0;</b>
+&nbsp;
+<b class="fc">&nbsp;        if (delivery.getDistance() &lt; 2) {</b>
+<b class="fc">&nbsp;            firstTerm = 50;</b>
+<b class="fc">&nbsp;        } else if (delivery.getDistance() &lt; 10) {</b>
+<b class="fc">&nbsp;            firstTerm = 100;</b>
+<b class="fc">&nbsp;        } else if (delivery.getDistance() &lt; 30) {</b>
+<b class="fc">&nbsp;            firstTerm = 200;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            firstTerm = 300;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (delivery.getSize() == CargoSize.LARGE) {</b>
+<b class="fc">&nbsp;            secondTerm = 200;</b>
+<b class="fc">&nbsp;        } else if (delivery.getSize() == CargoSize.SMALL) {</b>
+<b class="fc">&nbsp;            secondTerm = 100;</b>
+&nbsp;        }
+&nbsp;
+<b class="fc">&nbsp;        if (delivery.isFragile()) {</b>
+<b class="fc">&nbsp;            if (delivery.getDistance() &gt; 30) {</b>
+<b class="fc">&nbsp;                throw new UnacceptableDeliveryException(&quot;Delivery of fragile goods over a distance of more than 30 km is impossible&quot;);</b>
+&nbsp;            }
+<b class="fc">&nbsp;            thirdTerm = 300;</b>
+&nbsp;        }
+<b class="fc">&nbsp;        double deliveryPrice = (firstTerm + secondTerm + thirdTerm) * deliveryService.getWorkload().getLoadFactor();</b>
+&nbsp;
+<b class="fc">&nbsp;        if (Double.compare(deliveryPrice, minDeliveryCost) &lt; 0) {</b>
+<b class="fc">&nbsp;            return minDeliveryCost;</b>
+&nbsp;        } else {
+<b class="fc">&nbsp;            return deliveryPrice;</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2024-01-13 19:50</div>
+</div>
+</body>
+</html>
